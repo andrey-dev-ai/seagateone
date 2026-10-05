@@ -1,0 +1,60 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { load } from 'cheerio';
+import { renderSite, getDictionary, normalizeContacts, resolveLocale } from '../lib/site.mjs';
+
+test('renders translated primary content and accessible labels without an iframe', () => {
+  const cases = [['en', 'Company'], ['ru', 'Компания'], ['uk', 'Компанія'], ['de', 'Unternehmen'], ['ar', 'الشركة']];
+  for (const [locale, company] of cases) {
+    const $ = load(renderSite(locale));
+    assert.equal($('iframe').length, 0);
+    assert.equal($('nav a[href="#company"]').text(), company);
+    assert.equal($('h1').length, 1);
+    assert.ok($('.brand').attr('aria-label'));
+    assert.equal($('.language-picker a').length, 5);
+    assert.equal($(`.language-picker a[href="/${locale}"]`).attr('aria-current'), 'page');
+    assert.equal($('img[src="/gate-one/assets/hero.webp"]').length, 1);
+    assert.match($('body').text(), /2014/);
+  }
+});
+
+test('each dictionary covers every template translation including aria and alt', () => {
+  const en = getDictionary('en');
+  for (const locale of ['ru', 'uk', 'de', 'ar']) {
+    const dict = getDictionary(locale);
+    assert.deepEqual(Object.keys(dict).sort(), Object.keys(en).sort());
+    for (const value of Object.values(dict)) assert.ok(typeof value === 'string' && value.trim());
+  }
+});
+
+test('locale selection rejects untrusted values and preserves explicit supported URLs', () => {
+  assert.equal(resolveLocale('ar', 'de'), 'ar');
+  assert.equal(resolveLocale(null, 'uk'), 'uk');
+  assert.equal(resolveLocale('<script>', 'de'), 'de');
+  assert.equal(resolveLocale('__proto__', null), 'en');
+});
+
+test('address-only contacts are visible and malformed phones never produce empty tel links', () => {
+  const contacts = normalizeContacts({address: 'Verified address', phone: '-----', email: ''});
+  assert.deepEqual(contacts, {email: '', phone: '', phoneHref: '', address: 'Verified address'});
+  const $ = load(renderSite('en', contacts));
+  assert.equal($('#contact').attr('hidden'), undefined);
+  assert.equal($('#contact-links p').text(), 'Verified address');
+  assert.equal($('#contact-links a[href="tel:"]').length, 0);
+  assert.equal(normalizeContacts({phone: '+++++'}).phone, '');
+  assert.equal(normalizeContacts({phone: '+49 (30) 123456'}).phoneHref, 'tel:+4930123456');
+});
+
+test('contacts are escaped as text rather than inserted as executable markup', () => {
+  const $ = load(renderSite('en', normalizeContacts({address: '<img src=x onerror=alert(1)>'})));
+  assert.equal($('#contact-links img').length, 0);
+  assert.equal($('#contact-links p').text(), '<img src=x onerror=alert(1)>');
+});
+
+test('header and footer consistently use the approved G1 brand asset', () => {
+  const $ = load(renderSite('uk'));
+  assert.equal($('.brand img[src="/gate-one/assets/gateone-mark.webp"]').length, 1);
+  assert.equal($('.footer-logo img[src="/gate-one/assets/gateone-mark.webp"]').length, 1);
+  assert.equal($('.brand svg').length, 0);
+  assert.equal($('.brand-type').text(), 'GATE ONE LTD');
+});
