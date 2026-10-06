@@ -3,10 +3,13 @@
 html { scroll-padding-block-start: 24px; }
 h1,h2,h3,p,dd,dt,a,summary { overflow-wrap: break-word; }
 h1,h2,h3 { text-wrap: balance; }
+h2 { letter-spacing: -.035em; }
+.company-copy p,.activities-intro > p,.service-body p,.outlook-layout > p,.principles p { text-wrap: pretty; }
+.section-word { display: none; }
 .hero { height: auto; min-height: min(960px, 100svh); overflow: visible; }
 .hero-inner { padding-block-end: 170px; }
 .hero-shade { background: linear-gradient(90deg,rgba(3,24,37,.85),rgba(3,24,37,.62) 52%,rgba(3,24,37,.18)),linear-gradient(180deg,rgba(3,20,30,.6),transparent 35%,rgba(2,21,34,.7)); }
-.hero h1 { max-width: 1100px; font-size: clamp(42px,6.1vw,96px); }
+.hero h1 { max-width: 1100px; font-size: clamp(42px,6.1vw,96px); letter-spacing: -.035em; }
 .hero-description { max-width: 560px; }
 .hero-eyebrow { max-width: 800px; }
 .tiny-line { flex-shrink: 0; }
@@ -64,15 +67,15 @@ html[dir="rtl"] .principle-line:before { left: auto; right: 0; }
   .menu-toggle { display:block; }
   .navigation { position:absolute;top:90px;left:0;right:0;background:#071f2c;display:flex;flex-direction:column;gap:0;padding:20px var(--gutter);margin:0;opacity:0;visibility:hidden;transform:translateY(-10px);font-size:22px;max-height:calc(100svh - 100px);overflow:auto; }
   .navigation a { padding:14px 0; }
-  .menu-open .navigation { opacity:1;visibility:visible;transform:none; }
+  .menu-open .navigation { opacity:1;visibility:visible;transform:none;transition-property:opacity,transform; }
   .menu-open .menu-toggle span:first-child { transform:translateY(3.5px) rotate(45deg); }
   .menu-open .menu-toggle span:last-child { transform:translateY(-3.5px) rotate(-45deg); }
   .hero { min-height:740px;max-height:none; }
 }
 @media(max-width:760px) {
   .header-inner { gap:12px; }
-  .hero { height:auto;min-height:860px;max-height:none; }
-  .hero-inner { padding-block:174px 200px; }
+  .hero { height:auto;min-height:max(700px,100svh);max-height:none; }
+  .hero-inner { padding-block:clamp(144px,20svh,174px) 170px; }
   .hero h1 { font-size:clamp(40px,8.7vw,66px); }
   .hero-shade { background:linear-gradient(180deg,#051e30e3,#051e30b8 55%,#051e3070); }
   html[dir="rtl"] .hero-shade { background:linear-gradient(180deg,#051e30e3,#051e30b8 55%,#051e3070); }
@@ -85,6 +88,7 @@ html[dir="rtl"] .principle-line:before { left: auto; right: 0; }
   .fact-number { font-size:clamp(26px,7.5vw,44px); }
   .service-body { padding-inline:32px 12px; }
   .service h3 { font-size:clamp(21px,5.6vw,26px); }
+  h2,.activities-intro h2 { font-size:clamp(34px,8.6vw,42px); }
   .vessel-specs { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .vessel-specs dd { font-size:clamp(22px,6vw,28px); }
   .vessel-figure figcaption { font-size:12px; }

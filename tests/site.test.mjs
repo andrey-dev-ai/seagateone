@@ -58,3 +58,28 @@ test('header and footer consistently use the approved G1 brand asset', () => {
   assert.equal($('.brand svg').length, 0);
   assert.equal($('.brand-type').text(), 'GATE ONE LTD');
 });
+
+test('accessible action names contain their visible labels and selected language', () => {
+  for (const locale of ['en', 'ru', 'uk', 'de', 'ar']) {
+    const $ = load(renderSite(locale));
+    const dict = getDictionary(locale);
+    const languageName = $('.language-picker summary').attr('aria-label');
+    assert.ok(languageName.includes(locale.toUpperCase()));
+    assert.ok(languageName.includes($('.language-picker a[aria-current]').text()));
+    const imageLabel = $('#open-vessel .image-label > span').first().text();
+    const imageName = $('#open-vessel').attr('aria-label');
+    assert.ok(imageName.includes(imageLabel));
+    assert.ok(imageName.includes(dict.openImage));
+  }
+});
+
+test('section headings allow natural wrapping while preserving word boundaries', () => {
+  for (const locale of ['en', 'ru', 'uk', 'de', 'ar']) {
+    const $ = load(renderSite(locale));
+    for (const id of ['company-title', 'activities-title', 'vessel-title', 'outlook-title']) {
+      const heading = $('#' + id);
+      assert.equal(heading.find('br').length, 0);
+      assert.ok(heading.text().includes(' '));
+    }
+  }
+});

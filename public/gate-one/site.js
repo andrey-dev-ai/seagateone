@@ -37,7 +37,13 @@
     if (focus) toggle.focus();
   }
   setMenu(false);
-  toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  toggle.addEventListener('click', event => {
+    const opening = toggle.getAttribute('aria-expanded') !== 'true';
+    setMenu(opening);
+    if (opening && small.matches && event.detail === 0) {
+      nav.querySelector('a:not([hidden])')?.focus({ preventScroll: true });
+    }
+  });
   nav.addEventListener('click', event => {
     if (event.target.closest('a')) setMenu(false, true);
   });

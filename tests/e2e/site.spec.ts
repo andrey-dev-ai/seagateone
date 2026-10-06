@@ -101,3 +101,46 @@ test('404 pages never overwrite the visitor language preference', async ({ page 
   await page.goto('/')
   await expect(page).toHaveURL(/\/de$/)
 })
+
+test('keyboard opening enters the mobile navigation in every language', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 })
+  for (const locale of ['en', 'ru', 'uk', 'de', 'ar']) {
+    await page.goto('/' + locale)
+    const menu = page.locator('#menu-toggle')
+    await menu.focus()
+    await page.keyboard.press('Enter')
+    await expect(menu).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.locator('#navigation a[href="#company"]')).toBeFocused()
+    await page.keyboard.press('Tab')
+    await expect(page.locator('#navigation a[href="#activities"]')).toBeFocused()
+    await page.keyboard.press('Escape')
+    await expect(menu).toHaveAttribute('aria-expanded', 'false')
+    await expect(menu).toBeFocused()
+  }
+})
+
+test('mobile and tablet navigation remains usable without JavaScript in LTR and RTL', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false })
+  try {
+    const page = await context.newPage()
+    const base = process.env.TEST_BASE_URL ?? 'http://localhost:3001'
+    for (const locale of ['uk', 'ar']) {
+      for (const width of [375, 1024]) {
+        await page.setViewportSize({ width, height: 812 })
+        await page.goto(base + '/' + locale)
+        await expect(page.locator('#menu-toggle')).toBeHidden()
+        const company = page.locator('#navigation a[href="#company"]')
+        const vessel = page.locator('#navigation a[href="#vessel"]')
+        await expect(company).toBeVisible()
+        await expect(vessel).toBeVisible()
+        await vessel.click()
+        await expect(page).toHaveURL(new RegExp('/' + locale + '#vessel$'))
+        await expect(page.locator('#vessel-title')).toBeInViewport()
+        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
+        expect(overflow).toBeLessThanOrEqual(1)
+      }
+    }
+  } finally {
+    await context.close()
+  }
+})
