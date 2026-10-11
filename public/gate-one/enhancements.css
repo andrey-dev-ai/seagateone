@@ -106,6 +106,7 @@ html[dir="rtl"] .principle-line:before { left: auto; right: 0; }
   .language-picker summary { min-width:54px; }
   .hero h1 { font-size:38px; }
   .company-facts { grid-template-columns:minmax(0,1fr);gap:24px; }
+  .vessel-specs { grid-template-columns:minmax(0,1fr); }
   .company-facts>div+div { padding-inline-start:0;border-inline-start:0; }
   .company-facts p { max-width:none; }
   .fact-number { font-size:40px; }

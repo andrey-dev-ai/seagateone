@@ -144,3 +144,27 @@ test('mobile and tablet navigation remains usable without JavaScript in LTR and 
     await context.close()
   }
 })
+
+test('narrow vessel facts keep individual words on one line', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 812 })
+  for (const locale of ['uk', 'de']) {
+    await page.goto('/' + locale)
+    await page.evaluate(() => document.fonts.ready)
+    const brokenWords = await page.locator('.vessel-specs').evaluate(container => {
+      const broken: string[] = []
+      const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT)
+      while (walker.nextNode()) {
+        const node = walker.currentNode
+        for (const match of (node.textContent ?? '').matchAll(/\S+/gu)) {
+          const range = document.createRange()
+          range.setStart(node, match.index)
+          range.setEnd(node, match.index + match[0].length)
+          const lines = new Set([...range.getClientRects()].filter(rect => rect.width > 0).map(rect => Math.round(rect.y)))
+          if (lines.size > 1) broken.push(match[0])
+        }
+      }
+      return broken
+    })
+    expect(brokenWords, locale + ' vessel facts at 320 px').toEqual([])
+  }
+})

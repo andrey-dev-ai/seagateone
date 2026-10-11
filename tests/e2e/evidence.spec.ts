@@ -28,6 +28,10 @@ test('capture review screenshots and local load metrics', async ({ page }, testI
   for (const [locale, width] of [['de', 320], ['ar', 375]] as const) {
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/' + locale)
+    await page.evaluate(() => document.fonts.ready)
+    const illustration = page.locator('#open-vessel img')
+    await illustration.scrollIntoViewIfNeeded()
+    await illustration.evaluate(image => (image as HTMLImageElement).decode())
     await page.screenshot({ path: 'docs/screenshots/' + locale + '-mobile.png', fullPage: true })
   }
 })
