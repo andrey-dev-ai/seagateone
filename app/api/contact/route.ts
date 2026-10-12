@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
 
   const token = process.env.TELEGRAM_BOT_TOKEN
   const chatId = process.env.TELEGRAM_CHAT_ID
-  if (!token || !chatId || !/^\\d{6,15}:[A-Za-z0-9_-]{20,}$/.test(token) || !/^-?\\d{5,20}$/.test(chatId)) {
+  if (!token || !chatId || !/^\d{6,15}:[A-Za-z0-9_-]{20,}$/.test(token) || !/^-?\d{5,20}$/.test(chatId)) {
     console.error('Gate One contact service is not configured')
     return fail(503)
   }
