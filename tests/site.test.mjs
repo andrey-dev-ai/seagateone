@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { load } from 'cheerio';
-import { renderSite, getDictionary, normalizeContacts, resolveLocale } from '../lib/site.mjs';
+import { renderSite, getDictionary, normalizeContacts, resolveLocale, getContacts } from '../lib/site.mjs';
+import { parseContactSubmission, formatTelegramMessage } from '../lib/contact.mjs';
 
 test('renders translated primary content and accessible labels without an iframe', () => {
   const cases = [['en', 'Company'], ['ru', 'Компания'], ['uk', 'Компанія'], ['de', 'Unternehmen'], ['ar', 'الشركة']];
@@ -82,4 +83,31 @@ test('section headings allow natural wrapping while preserving word boundaries',
       assert.ok(heading.text().includes(' '));
     }
   }
+});
+
+test('company phone and WhatsApp are correctly formatted across all locales', () => {
+  const contacts = getContacts();
+  assert.equal(contacts.phoneHref, 'tel:+447470124572');
+  assert.equal(contacts.whatsappHref, 'https://wa.me/447470124572');
+  assert.equal(contacts.addressProvisional, true);
+  for (const locale of ['en','ru','uk','de','ar']) {
+    const $ = load(renderSite(locale));
+    assert.equal($('#contact').attr('hidden'), undefined);
+    assert.equal($('#contact-links a[href="tel:+447470124572"]').length, 1);
+    assert.equal($('#contact-links a[href="https://wa.me/447470124572"]').length, 1);
+    assert.equal($('#contact-form input[name="name"]').attr('required'), 'required');
+    assert.equal($('#contact-form textarea[name="message"]').length, 1);
+    assert.ok($('#contact-links').text().includes('British Virgin Islands'));
+  }
+});
+
+test('contact submissions validate inputs and do not accept junk payloads', () => {
+  assert.equal(parseContactSubmission(null), null);
+  assert.equal(parseContactSubmission({name:'A',reply:'bad',message:'hi'}), null);
+  assert.equal(parseContactSubmission({name:'Ada',reply:'ada@example.com',message:'Please contact me about a voyage.'}).name, 'Ada');
+  assert.equal(parseContactSubmission({name:'Ada',reply:'ada@example.com',message:'Please contact me about a voyage.',companyWebsite:'spam.example'}).spam, true);
+  assert.equal(parseContactSubmission({name:'Ada',reply:'ada@example.com',message:'x'.repeat(2001)}), null);
+  const text = formatTelegramMessage(parseContactSubmission({name:'Ada',reply:'ada@example.com',message:'Please contact me about a voyage.',locale:'en'}));
+  assert.match(text, /ada@example.com/);
+  assert.match(text, /Please contact me/);
 });
