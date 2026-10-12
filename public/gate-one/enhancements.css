@@ -123,3 +123,36 @@ html[dir="rtl"] .principle-line:before { left: auto; right: 0; }
   .brand .brand-type { font-size:12px;letter-spacing:.05em; }
   .brand .brand-mark { width:32px;height:32px; }
 }
+
+
+/* Contact: restrained two-column editorial layout, matching Gate One identity. */
+.contact { padding-block: clamp(78px, 9vw, 140px); }
+.contact-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(40px,7vw,110px); align-items:start; }
+.contact-intro h2 { margin:0 0 18px; }
+.contact-subtitle { color:#4e6570; font-size:clamp(16px,1.8vw,19px); max-width:480px; line-height:1.6; }
+#contact-links.contact-details { display:grid; gap:28px; margin-top:44px; align-items:start; }
+.contact-detail { display:grid; gap:8px; min-width:0; }
+.contact-detail-label { color:#536b75; text-transform:uppercase; letter-spacing:.14em; font-size:11px; font-weight:700; }
+#contact-links .contact-detail a { font-size:clamp(19px,2.5vw,28px); font-weight:500; width:fit-content; border-bottom:1px solid #698590; text-decoration:none; }
+#contact-links .contact-detail a:hover { color:#146e87; border-bottom-color:currentColor; }
+#contact-links .contact-detail p { width:auto; margin:0; line-height:1.5; color:#253f49; overflow-wrap:break-word; }
+#contact-links .contact-detail .contact-provisional { color:#657a82; font-size:12px; margin-top:4px; }
+.contact-form { background:#fff; border:1px solid #d0dde3; padding:clamp(24px,3.5vw,50px); display:grid; gap:18px; box-shadow:0 18px 40px #061f2b0b; }
+.contact-form h3 { font-size:clamp(24px,2.8vw,34px); margin:0; letter-spacing:-.03em; }
+.contact-form-note { color:#526c79; font-size:15px; line-height:1.55; margin:-8px 0 8px; }
+.contact-form label { display:grid; gap:8px; font-size:13px; font-weight:600; }
+.contact-form input,.contact-form textarea { width:100%; box-sizing:border-box; border:1px solid #aabec8; color:#071f2c; background:#f9fcfd; font:inherit; font-size:16px; padding:13px 15px; border-radius:0; transition:border-color .15s,box-shadow .15s; }
+.contact-form textarea { resize:vertical; min-height:110px; }
+.contact-form input:focus-visible,.contact-form textarea:focus-visible { border-color:#126b85; outline:2px solid #126b85; outline-offset:1px; }
+.contact-trap { position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden; }
+.contact-submit { min-height:52px; color:#fff; background:#082b3c; border:1px solid #082b3c; font:inherit; font-size:14px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:15px 20px; }
+.contact-submit:hover:not(:disabled) { background:#16475c; }
+.contact-submit:disabled { opacity:.65; cursor:wait; }
+.contact-form-status { font-size:14px; line-height:1.5; min-height:0; margin:0; }
+.contact-form-status:empty { display:none; }
+.contact-form-status[data-state="error"] { color:#9e2a23; }
+.contact-form-status[data-state="success"] { color:#1d6952; }
+.contact-privacy { color:#5a717d; font-size:12px; line-height:1.6; margin:0; }
+@media(max-width:900px) { .contact-grid { grid-template-columns:minmax(0,1fr); } .contact-form { max-width:620px; } }
+@media(max-width:480px) { .contact { padding-block:70px; } .contact-form { padding:22px 18px; } }
+html[dir="rtl"] .contact-submit { flex-direction:row; }
