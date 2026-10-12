@@ -136,7 +136,29 @@
         <div class="principles"><div><span class="principle-line"></span><h3 data-i18n="principle1">Ownership</h3><p data-i18n="principle1Text">A business grounded in a real maritime asset.</p></div><div><span class="principle-line"></span><h3 data-i18n="principle2">Connection</h3><p data-i18n="principle2Text">Bringing the vessel, the cargo and the port into one conversation.</p></div><div><span class="principle-line"></span><h3 data-i18n="principle3">Perspective</h3><p data-i18n="principle3Text">Looking beyond a single voyage to the relationship ahead.</p></div></div>
       </div>
     </section>
-    <section class="contact" id="contact" hidden aria-labelledby="contact-title"><div class="wrap"><div class="section-label"><span data-i18n="navContact">CONTACT</span></div><h2 id="contact-title" data-i18n="contactTitle">Let’s talk maritime.</h2><div id="contact-links"></div></div></section>
+    <section class="contact" id="contact" hidden aria-labelledby="contact-title">
+      <div class="wrap">
+        <div class="section-label"><span data-i18n="navContact">CONTACT</span></div>
+        <div class="contact-grid">
+          <div class="contact-intro">
+            <h2 id="contact-title" data-i18n="contactTitle">Let’s talk maritime.</h2>
+            <p class="contact-subtitle" data-i18n="contactSubtitle">Connect with Gate One LTD regarding maritime enquiries.</p>
+            <div id="contact-links" class="contact-details"></div>
+          </div>
+          <form class="contact-form" id="contact-form" action="/api/contact" method="post" aria-labelledby="contact-form-title">
+            <h3 id="contact-form-title" data-i18n="contactFormTitle">Send an enquiry</h3>
+            <p class="contact-form-note" data-i18n="contactFormIntro">We will get back to you using the details provided.</p>
+            <label for="contact-name"><span data-i18n="contactName">Your name</span><input id="contact-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="100"></label>
+            <label for="contact-reply"><span data-i18n="contactReply">Email or phone</span><input id="contact-reply" name="reply" type="text" required minlength="5" maxlength="180"></label>
+            <label for="contact-message"><span data-i18n="contactMessage">Message</span><textarea id="contact-message" name="message" rows="4" required minlength="10" maxlength="2000"></textarea></label>
+            <div class="contact-trap" aria-hidden="true"><label>Company website<input name="companyWebsite" type="text" tabindex="-1" autocomplete="off"></label></div>
+            <button class="contact-submit" type="submit"><span data-i18n="contactSubmit">Send enquiry</span><span aria-hidden="true">↗</span></button>
+            <p id="contact-form-status" class="contact-form-status" role="status" aria-live="polite"></p>
+            <p class="contact-privacy" data-i18n="contactPrivacy">Your enquiry is delivered to our Telegram inbox. No database is used on this website.</p>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
   <footer class="footer">
     <div class="wrap">
