@@ -76,5 +76,21 @@
   "fullImageNote": "Die mit KI erstellten Bilder veranschaulichen den Schiffstyp. Sie sind weder Fotografien noch exakte Darstellungen des Schiffes des Unternehmens.",
   "contactTitle": "Sprechen wir über maritime Zusammenarbeit.",
   "metaTitle": "Gate One LTD — Reederei & maritime Dienstleistungen",
-  "metaDescription": "Gate One LTD — Schiffseigentum und maritime Geschäftsfelder. Lernen Sie unser Unternehmen und unseren Trockenfrachter mit einer Tonnage von 5.000 Tonnen, Baujahr 2014, kennen."
+  "metaDescription": "Gate One LTD — Schiffseigentum und maritime Geschäftsfelder. Lernen Sie unser Unternehmen und unseren Trockenfrachter mit einer Tonnage von 5.000 Tonnen, Baujahr 2014, kennen.",
+  "contactSubtitle": "Kontaktieren Sie Gate One LTD bei Anfragen zur maritimen Zusammenarbeit.",
+  "contactPhoneLabel": "Telefon",
+  "contactWhatsApp": "Über WhatsApp schreiben",
+  "contactAddressLabel": "Büroadresse",
+  "contactProvisionalLabel": "Vorläufiger Standort",
+  "contactAddressPending": "Platzhalter – keine bestätigte Geschäftsanschrift.",
+  "contactFormTitle": "Anfrage senden",
+  "contactFormIntro": "Hinterlassen Sie Ihre Kontaktdaten. Wir melden uns bei Ihnen.",
+  "contactName": "Ihr Name",
+  "contactReply": "E-Mail oder Telefon",
+  "contactMessage": "Ihre Nachricht",
+  "contactSubmit": "Anfrage senden",
+  "contactSending": "Wird gesendet…",
+  "contactSuccess": "Vielen Dank! Ihre Nachricht wurde zugestellt.",
+  "contactError": "Nachricht nicht gesendet. Bitte versuchen Sie es erneut oder rufen Sie uns an.",
+  "contactPrivacy": "Ihre Anfrage wird an unseren Telegram-Posteingang zugestellt. Diese Website führt keine Anfragedatenbank."
 }
