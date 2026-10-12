@@ -76,5 +76,21 @@
   "homeLabel": "Gate One LTD — главная",
   "languageLabel": "Выбрать язык",
   "metaTitle": "Gate One LTD — Судовладение и морские услуги",
-  "metaDescription": "Gate One LTD — судовладение, морские грузоперевозки, фрахтование и агентирование. Собственный сухогруз 2014 года постройки, 5 000 тонн."
+  "metaDescription": "Gate One LTD — судовладение, морские грузоперевозки, фрахтование и агентирование. Собственный сухогруз 2014 года постройки, 5 000 тонн.",
+  "contactSubtitle": "Свяжитесь с Gate One LTD по вопросам морского сотрудничества.",
+  "contactPhoneLabel": "Телефон",
+  "contactWhatsApp": "Написать в WhatsApp",
+  "contactAddressLabel": "Адрес офиса",
+  "contactProvisionalLabel": "Предварительное местоположение",
+  "contactAddressPending": "Временный адрес — не является подтверждённым юридическим адресом.",
+  "contactFormTitle": "Отправить запрос",
+  "contactFormIntro": "Оставьте контактные данные, и мы ответим вам.",
+  "contactName": "Ваше имя",
+  "contactReply": "Email или телефон",
+  "contactMessage": "Ваше сообщение",
+  "contactSubmit": "Отправить запрос",
+  "contactSending": "Отправляем…",
+  "contactSuccess": "Спасибо! Ваше сообщение доставлено.",
+  "contactError": "Сообщение не отправлено. Повторите попытку или позвоните нам.",
+  "contactPrivacy": "Заявка поступит в наш Telegram. На сайте нет базы данных заявок."
 }
