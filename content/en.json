@@ -76,5 +76,21 @@
   "homeLabel": "Gate One LTD — home",
   "languageLabel": "Choose language",
   "metaTitle": "Gate One LTD — Shipowning & Maritime",
-  "metaDescription": "Gate One LTD — shipownership and maritime activities. Discover our company and our 5,000-tonne dry cargo vessel, built in 2014."
+  "metaDescription": "Gate One LTD — shipownership and maritime activities. Discover our company and our 5,000-tonne dry cargo vessel, built in 2014.",
+  "contactSubtitle": "Contact Gate One LTD for maritime business enquiries.",
+  "contactPhoneLabel": "Telephone",
+  "contactWhatsApp": "Chat on WhatsApp",
+  "contactAddressLabel": "Office address",
+  "contactProvisionalLabel": "Provisional location",
+  "contactAddressPending": "Location placeholder — not a registered company address.",
+  "contactFormTitle": "Send an enquiry",
+  "contactFormIntro": "Leave your details and we will respond as soon as possible.",
+  "contactName": "Your name",
+  "contactReply": "Email or phone",
+  "contactMessage": "Your message",
+  "contactSubmit": "Send enquiry",
+  "contactSending": "Sending…",
+  "contactSuccess": "Thank you. Your message has been delivered.",
+  "contactError": "Message not sent. Please try again or contact us by telephone.",
+  "contactPrivacy": "Your enquiry is delivered to our Telegram inbox. No enquiry database is used by this website."
 }
