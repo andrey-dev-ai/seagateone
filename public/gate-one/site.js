@@ -74,4 +74,45 @@
     const bounds = dialog.getBoundingClientRect();
     if (event.target === dialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) dialog.close();
   }));
+
+  const form = document.getElementById('contact-form');
+  if (form) {
+    const button = form.querySelector('[type="submit"]');
+    const status = document.getElementById('contact-form-status');
+    const originalLabel = button?.querySelector('[data-i18n]')?.textContent || '';
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!form.reportValidity() || !button || !status || button.disabled) return;
+      const data = new FormData(form);
+      button.disabled = true;
+      const label = button.querySelector('[data-i18n]');
+      if (label) label.textContent = form.dataset.sendingLabel;
+      status.textContent = '';
+      delete status.dataset.state;
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: data.get('name'),
+            reply: data.get('reply'),
+            message: data.get('message'),
+            companyWebsite: data.get('companyWebsite'),
+            locale,
+          }),
+          cache: 'no-store',
+        });
+        if (!response.ok) throw new Error('Delivery failed');
+        status.textContent = form.dataset.successLabel;
+        status.dataset.state = 'success';
+        form.reset();
+      } catch {
+        status.textContent = form.dataset.errorLabel;
+        status.dataset.state = 'error';
+      } finally {
+        button.disabled = false;
+        if (label) label.textContent = originalLabel;
+      }
+    });
+  }
 })();
