@@ -89,7 +89,7 @@ test('company phone and WhatsApp are correctly formatted across all locales', ()
   const contacts = getContacts();
   assert.equal(contacts.phoneHref, 'tel:+447470124572');
   assert.equal(contacts.whatsappHref, 'https://wa.me/447470124572');
-  assert.equal(contacts.addressProvisional, true);
+  assert.equal(contacts.addressProvisional, false);
   for (const locale of ['en','ru','uk','de','ar']) {
     const $ = load(renderSite(locale));
     assert.equal($('#contact').attr('hidden'), undefined);
@@ -97,7 +97,11 @@ test('company phone and WhatsApp are correctly formatted across all locales', ()
     assert.equal($('#contact-links a[href="https://wa.me/447470124572"]').length, 1);
     assert.equal($('#contact-form input[name="name"]').attr('required'), 'required');
     assert.equal($('#contact-form textarea[name="message"]').length, 1);
-    assert.ok($('#contact-links').text().includes('British Virgin Islands'));
+    const address = $('#contact-links .contact-detail').last();
+    assert.equal(address.find('p').text(), 'Company Complex, Ajeltake Road, Ajeltake Island, Majuro, Marshall Islands MH9696');
+    assert.equal(address.find('.contact-detail-label').text(), getDictionary(locale).contactAddressLabel);
+    assert.equal(address.find('.contact-provisional').length, 0);
+    assert.ok(!$('#contact-links').text().includes('British Virgin Islands'));
   }
 });
 
